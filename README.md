@@ -1,0 +1,1 @@
+# SSE client for Ruby
