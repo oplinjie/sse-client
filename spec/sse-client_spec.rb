@@ -60,5 +60,19 @@ RSpec.describe SSE::EventSource do
       end
       con = es.start
     end
+
+    it 'should return error' do
+      stub_request(:get, 'fakeurl.com/sse-server').
+        to_return(
+          status: 400,
+          headers: { 'Content-Type': 'event-stream' },
+          body: "error"
+        )
+      es = SSE::EventSource.new('fakeurl.com/sse-server')
+      es.error do |response|
+        expect(response).to eq('error')
+      end
+      con = es.start
+    end
   end
 end

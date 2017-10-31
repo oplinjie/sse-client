@@ -54,6 +54,7 @@ module SSE
 
     def listen
       block = proc { |response|
+        handle_open
         case response.code
         when "200"
           buffer = ""
@@ -96,13 +97,18 @@ module SSE
       end
     end
 
+    def handle_open
+      @ready_state = OPEN
+      @opens.each { |open| open.call() }
+    end
+
     def handle_error response
       close
       @errors.each { |error| error.call(response) }
     end
 
     def close
-      @ready_state == CLOSED
+      @ready_state = CLOSED
     end
   end
 end
