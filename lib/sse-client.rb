@@ -16,11 +16,12 @@ module SSE
     # The connection is not open, and the user agent is not trying to reconnect. Either there was a fatal error or the close() method was invoked.
     CLOSED     = 2
 
-    def initialize(url, query = {}, headers = {})
+    def initialize(url, query = {}, headers = {}, before_execution_proc: nil)
       @url = url
       @headers = headers
       @headers['params'] = query
       @ready_state = CLOSED
+      @before_execution_proc = before_execution_proc
 
       @opens = []
       @errors = []
@@ -73,7 +74,8 @@ module SSE
       conn = RestClient::Request.execute(method: :get,
                                     url: @url,
                                     headers: @headers,
-                                    block_response: block)
+                                    block_response: block,
+                                    before_execution_proc: @before_execution_proc)
     end
 
     def handle_stream(stream)
