@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name             = "sse-client"
-  s.version          = "1.0.0"
+  s.version          = "1.1.0"
   s.date             = Time.now.utc.strftime("%Y-%m-%d")
   s.authors          = "oplinjie"
   s.email            = "oplinjie@163.com"
