@@ -68,7 +68,7 @@ module SSE
           end
           close
         else
-          handle_error response.body
+          handle_error response
         end
       }
       conn = RestClient::Request.execute(method: :get,
